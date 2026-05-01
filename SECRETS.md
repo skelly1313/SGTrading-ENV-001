@@ -1,0 +1,16 @@
+### EXAMPLE_SERVICE_A SECRETS
+
+1. EXAMPLE_SERVICE_A_URL = <https://your-service.example.com>
+2. EXAMPLE_SERVICE_A_USERNAME = <username>
+3. EXAMPLE_SERVICE_A_API_TOKEN = <token>
+
+### EXAMPLE_SERVICE_B SECRETS
+
+1. EXAMPLE_SERVICE_B_URL = <https://api.example.com>
+2. EXAMPLE_SERVICE_B_USERNAME = <username>
+3. EXAMPLE_SERVICE_B_API_TOKEN = <token>
+
+### EXAMPLE_NOTIFY SECRETS
+
+1. NOTIFY_BOT_TOKEN = <bot-token>
+2. NOTIFY_CHAT_ID = <chat-id>
