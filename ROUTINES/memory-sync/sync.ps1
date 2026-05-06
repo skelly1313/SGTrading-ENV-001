@@ -239,8 +239,6 @@ try {
         foreach ($rel in $actions.repo_only)   { Copy-Memory -SrcRoot $MemoryRepo  -DstRoot $MemoryLocal -Rel $rel; $changed++ }
         foreach ($rel in $actions.repo_newer)  { Copy-Memory -SrcRoot $MemoryRepo  -DstRoot $MemoryLocal -Rel $rel; $changed++ }
 
-        if (Refresh-Index) { $changed++ }
-
         $state.last_sync_utc = (Get-Date).ToUniversalTime().ToString('o')
         $state.files = List-MdFiles -Root $MemoryRepo
         Save-State -State $state
