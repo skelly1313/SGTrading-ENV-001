@@ -1,1 +1,26 @@
 .idea
+.DS_Store
+*.DS_Store
+
+# Real credentials — keep SECRETS.md as template only
+SECRETS.local.md
+**/credentials.env
+**/*.env
+!*.env.example
+
+# Cached / large data — keep README, ignore everything else
+DATA/*
+!DATA/README.md
+**/*.parquet
+**/*.csv.gz
+
+# Local Claude state (project-specific settings live here)
+.claude/
+
+# Python / common build artifacts
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+dist/
+build/
