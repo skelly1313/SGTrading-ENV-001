@@ -1,1 +1,4 @@
-- _(empty — no synced memories yet. The `memory-sync` routine will populate this.)_
+﻿- [Don't invent trading strategy details](feedback_no_strategy_invention.md) - User wants scaffold first; never fabricate strategy rules, indicators, or broker choices
+- [SG Trading project](project_sg_trading.md) - Solo trading-bot project — early scaffolding stage, strategy undefined
+- [SGTrading-ENV-001 repo](reference_repo.md) - GitHub repo serving as source of truth for skills, routines, memory
+- [User skelly1313](user_skelly1313.md) - Solo operator on SG Trading; owns the repo alone, no collaborators
