@@ -9,12 +9,22 @@ Read-only by default — reports drift, doesn't fix it.
 
 ## Steps
 
-### 1. Verify skills
+### 1. Verify secrets
+
+Read `SECRETS.md`. For every key listed:
+
+- The value must be non-empty and must not be a placeholder (e.g. `<...>`, `your-`, `example`, blank).
+- Flag any key whose value looks like a placeholder or is missing.
+- For ALPACA keys specifically: confirm `ALPACA_BASE_URL` matches the expected environment (`paper-api.alpaca.markets` for paper, `api.alpaca.markets` for live).
+
+Do NOT print the actual secret values in any report or log.
+
+### 2. Verify skills
 
 Expected list = the **Skills** table in `<project>/AGENTS.md`. For each skill marked `scaffold` or beyond:
 
 - Skill folder exists where the agent loads skills from.
-- Credentials file (if required) exists, is non-empty, and is `chmod 600` (POSIX) / not world-readable (Windows).
+- Credentials required by the skill are present and non-placeholder in `SECRETS.md`.
 
 Flag any skill folder present on disk but missing from `AGENTS.md` (orphan).
 Skip skills marked `not started`.
@@ -46,8 +56,8 @@ Possible findings:
 
 ### 4. Verify repo hygiene
 
-- `.gitignore` includes `DATA/`, `.DS_Store`, `*.env`, `SECRETS.local.md`, `.claude/`.
-- No tracked file matches `*.env`, `credentials.env`, or `SECRETS.local.md`.
+- `.gitignore` includes `DATA/`, `.DS_Store`, `*.env`, `SECRETS.md`, `.claude/`.
+- No tracked file matches `*.env`, `credentials.env`, or `SECRETS.md`.
 - No file in `DATA/` is tracked.
 
 ### 5. Report
@@ -60,8 +70,9 @@ Always emit:
 
 | Check | Expected | Actual | Status |
 |---|---|---|---|
+| Secrets populated (SECRETS.md, no placeholders) | … | … | OK / DRIFT |
 | Skills documented vs present | … | … | OK / DRIFT |
-| Credential files (count, all 600) | … | … | OK / DRIFT |
+| Credentials in SECRETS.md for each active skill | … | … | OK / DRIFT |
 | Local routines documented vs scheduled | … | … | OK / DRIFT |
 | Remote routines documented (folder presence) | … | … | OK / DRIFT |
 | Memory: local vs repo | … | … | OK / DRIFT / CONFLICT |
@@ -69,7 +80,7 @@ Always emit:
 
 ### 6. Notify
 
-Send a one-line summary to the channel configured in `SECRETS.local.md`
+Send a one-line summary to the channel configured in `SECRETS.md`
 (falls back to printing if not configured).
 
 ### 7. Persist
@@ -81,7 +92,7 @@ Add to `MEMORY.md` only when something durable changes — not for one-off drift
 
 ## Constraints
 
-- DO NOT edit `SECRETS.md`, `SECRETS.local.md`, `AGENTS.md`, or any routine's `README.md` to "fix" drift.
+- DO NOT edit `SECRETS.md`, `SECRETS.md`, `AGENTS.md`, or any routine's `README.md` to "fix" drift.
 - DO NOT create or delete scheduled tasks.
 - DO NOT auto-resolve memory conflicts. Reporting only.
 - DO NOT push or commit anything from this routine — that's `memory-sync`'s job.

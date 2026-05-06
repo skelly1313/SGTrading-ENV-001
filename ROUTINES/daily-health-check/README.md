@@ -10,15 +10,16 @@ Reports drift; does not auto-fix.
 
 ## What it checks
 
-1. Each skill listed in [`AGENTS.md`](../../AGENTS.md) (status `scaffold` or beyond) exists where it should and has a non-empty credentials file.
-2. Each routine folder under `ROUTINES/` has a matching scheduled task (skip routines marked `proposed`).
-3. The cron schedule on each scheduled task matches the cadence stated in its README.
-4. **Memory parity** — local `~/.claude/.../memory/` vs repo `MEMORY/`. Flags `LOCAL_ONLY`, `REPO_ONLY`, `DIFFER`, or `IN_SYNC`.
-5. **Repo hygiene** — `.gitignore` has the expected entries, no secrets or data files are tracked.
+1. **Secrets populated** — every key in `SECRETS.md` has a real value (no placeholders, no blanks). Alpaca URL validated against expected environment.
+2. Each skill listed in [`AGENTS.md`](../../AGENTS.md) (status `scaffold` or beyond) exists where it should and its required secrets are present in `SECRETS.md`.
+3. Each routine folder under `ROUTINES/` has a matching scheduled task (skip routines marked `proposed`).
+4. The cron schedule on each scheduled task matches the cadence stated in its README.
+5. **Memory parity** — local `~/.claude/.../memory/` vs repo `MEMORY/`. Flags `LOCAL_ONLY`, `REPO_ONLY`, `DIFFER`, or `IN_SYNC`.
+6. **Repo hygiene** — `.gitignore` has the expected entries, no secrets or data files are tracked.
 
 ## Outputs
 
-- Notification to the channel configured in `SECRETS.local.md`.
+- Notification to the channel configured in `SECRETS.md`.
 - Appended report at `daily/<YYYY-MM-DD>.md`.
 
 ## Discipline

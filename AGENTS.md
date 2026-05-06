@@ -8,8 +8,8 @@ Index of skills and routines for the SG Trading project.
 | --- | --- | --- |
 | `memory-sync` | Sync Claude auto-memory between local and this repo | scaffold |
 | `daily-health-check` | Verify skills/routines match docs; detect drift | scaffold |
-| `<broker-api>` | Place/query orders via broker (TBD: Alpaca / IBKR / etc.) | not started |
-| `<market-data>` | Fetch quotes, bars, fundamentals (TBD provider) | not started |
+| `alpaca-broker` | Place/query orders via Alpaca (paper) | not started |
+| `alpaca-data` | Fetch bars/quotes via Alpaca Market Data API | not started |
 | `<backtester>` | Run strategy specs against historical data | not started |
 | `<notifier>` | Send alerts to chat/email/webhook | not started |
 
@@ -26,10 +26,14 @@ See [`SKILL-EXAMPLE.md`](SKILL-EXAMPLE.md) for the per-skill template.
 
 See each routine's `README.md`.
 
+## Decisions
+
+- **Broker:** Alpaca, starting on paper (`paper-api.alpaca.markets`).
+
 ## Open decisions
 
-- Broker (Alpaca paper → live? IBKR? Other?)
-- Market data provider
+- Market data — Alpaca data is bundled with broker access, but is it enough? (Polygon / Databento / Tiingo for upgrades.)
+- Language / runtime (Python? Node? Both?)
 - Strategy class (mean reversion / momentum / pairs / event-driven)
-- Asset universe (equities / futures / crypto / FX)
+- Asset universe (equities only? +crypto via Alpaca?)
 - Capital + risk caps
