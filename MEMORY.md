@@ -28,7 +28,8 @@ conventions and pointers.
 | Per-routine README | `ROUTINES/<routine>/README.md` |
 | Per-routine prompt | `ROUTINES/<routine>/prompt.md` |
 | Per-run history | `ROUTINES/<routine>/daily/<YYYY-MM-DD>.md` |
-| Strategy specs | `STRATEGIES/<name>.md` |
+| Strategy index | [`STRATEGIES.md`](STRATEGIES.md) |
+| Strategy specs | `STRATEGIES/<name>/spec.md` |
 | Credentials (template) | [`SECRETS.md`](SECRETS.md) |
 | Credentials (real) | `SECRETS.local.md` (gitignored) |
 
@@ -43,3 +44,5 @@ conventions and pointers.
 ## Change log
 
 - **2026-05-06** — initial scaffold filled in; remote pointed at `SGTrading-ENV-001`.
+- **2026-05-06** — strategies converted to folder-per-strategy layout; index now at `STRATEGIES.md`.
+- **2026-05-06** — removed redundant `DOCS/strategies/`; per-strategy scratchpads now live in `STRATEGIES/<name>/notes.md`.

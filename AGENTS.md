@@ -6,23 +6,23 @@ Index of skills and routines for the SG Trading project.
 
 | Skill | Purpose | Status |
 | --- | --- | --- |
-| `memory-sync` | Sync Claude auto-memory between local and this repo | scaffold |
-| `daily-health-check` | Verify skills/routines match docs; detect drift | scaffold |
+| `memory-sync` | Sync Claude auto-memory between local and this repo | **active** |
+| `daily-health-check` | Detect drift: memory, routine coverage, task health, git state | **active** |
 | `alpaca-broker` | Place/query orders via Alpaca (paper) | not started |
 | `alpaca-data` | Fetch bars/quotes via Alpaca Market Data API | not started |
 | `<backtester>` | Run strategy specs against historical data | not started |
-| `<notifier>` | Send alerts to chat/email/webhook | not started |
+| `telegram-notify` | Send alerts via Telegram bot ([`LIB/notify.ps1`](LIB/notify.ps1)) | scaffold |
 
 See [`SKILL-EXAMPLE.md`](SKILL-EXAMPLE.md) for the per-skill template.
 
 ## Routines
 
-| Routine | Where | Cadence | Purpose |
-| --- | --- | --- | --- |
-| `daily-health-check` | local | `0 9 * * 1-5` | Detect doc/setup drift; reconcile local vs repo memory |
-| `memory-sync` | local | `0 */4 * * *` (proposed) | Mirror local Claude memory → repo `MEMORY/` |
-| `market-open-scan` | local | `30 9 * * 1-5` (proposed) | Pre-market summary (TBD once data source picked) |
-| `eod-summary` | local | `15 16 * * 1-5` (proposed) | End-of-day P&L + journal entry (TBD) |
+| Routine | Where | Cadence | Status | Purpose |
+| --- | --- | --- | --- | --- |
+| `memory-sync` | local | `0 8,12,16,20 * * 1-5` | **scheduled** | Mirror local Claude memory → repo `MEMORY/` |
+| `daily-health-check` | local | `0 9 * * 1-5` | **scheduled** | Morning check: memory drift, routine coverage, task health, git state |
+| `market-open-scan` | local | `30 9 * * 1-5` | proposed | Pre-market summary (blocked: data source not chosen) |
+| `eod-summary` | local | `15 16 * * 1-5` | proposed | End-of-day P&L + journal entry (blocked: broker integration not built) |
 
 See each routine's `README.md`.
 

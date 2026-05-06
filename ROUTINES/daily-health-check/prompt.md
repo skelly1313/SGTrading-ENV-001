@@ -1,98 +1,61 @@
----
+﻿---
 name: daily-health-check
-description: Verify agent setup matches the project's documentation and detect memory drift
+description: Morning check — memory drift, routine coverage, scheduled task health, git state
 ---
 
-Daily verification that the agent's actual setup matches what's documented,
-plus reconciliation between local Claude memory and the repo's `MEMORY/`.
-Read-only by default — reports drift, doesn't fix it.
+Morning health check for the SG Trading project. Read-only — do not modify files, do not resolve conflicts, do not commit anything.
 
-## Steps
+Working directory: `C:\Users\djske\OneDrive\Desktop\SG Trading\SKILLS`
 
-### 1. Verify secrets
+## Check 1: Memory drift
 
-Read `SECRETS.md`. For every key listed:
+Run the memory-sync dry-run (no changes applied):
+```
+powershell -File "ROUTINES/memory-sync/sync.ps1" -DryRun
+```
+Flag any file classified as anything other than `unchanged`. List filenames only.
 
-- The value must be non-empty and must not be a placeholder (e.g. `<...>`, `your-`, `example`, blank).
-- Flag any key whose value looks like a placeholder or is missing.
-- For ALPACA keys specifically: confirm `ALPACA_BASE_URL` matches the expected environment (`paper-api.alpaca.markets` for paper, `api.alpaca.markets` for live).
+## Check 2: Routine coverage
 
-Do NOT print the actual secret values in any report or log.
+Read `AGENTS.md`. For each routine in the Routines table:
+- Does `ROUTINES/<name>/` directory exist?
+- Does `ROUTINES/<name>/prompt.md` exist?
 
-### 2. Verify skills
+List missing items as gaps.
 
-Expected list = the **Skills** table in `<project>/AGENTS.md`. For each skill marked `scaffold` or beyond:
+## Check 3: Scheduled task health
 
-- Skill folder exists where the agent loads skills from.
-- Credentials required by the skill are present and non-placeholder in `SECRETS.md`.
+List all scheduled tasks. For each task, flag if:
+- `lastRunAt` is missing (never run)
+- `lastRunAt` is more than 2x the expected interval ago:
+  - `memory-sync`: expected every 4h on weekdays
+  - `daily-health-check`: expected every 24h on weekdays
 
-Flag any skill folder present on disk but missing from `AGENTS.md` (orphan).
-Skip skills marked `not started`.
+## Check 4: Git state
 
-### 2. Verify routines
+Run:
+```
+git -C "C:\Users\djske\OneDrive\Desktop\SG Trading\SKILLS" status --short
+```
+Report any modified tracked files or uncommitted staged changes.
 
-Expected list = each subfolder under `<project>/ROUTINES/` that isn't `archive` or `daily-health-check` itself.
+## Output
 
-For each:
+Append to `ROUTINES/daily-health-check/daily/<YYYY-MM-DD>.md`:
 
-- A scheduled task exists with a matching name (skip for routines marked `proposed` in AGENTS.md).
-- The task is enabled.
-- Its cron expression matches the cadence in the routine's `README.md`.
+```
+## <UTC timestamp> — daily-health-check
+memory-drift: none | <list of filenames>
+routine-gaps: none | <list>
+task-health: all OK | <list of overdue/never-run>
+git: clean | dirty (<details>)
+overall: GREEN | YELLOW | RED
+```
 
-Remote routines: just confirm the folder has `prompt.md` and `README.md`.
+Print only the `overall:` line plus a one-sentence summary to stdout.
 
-### 3. Verify memory sync state
+## Grading
 
-- Local memory dir exists: `~/.claude/projects/C--Users-djske-OneDrive-Desktop-SG-Trading/memory/`
-- Repo `MEMORY/` exists.
-- Compare file lists.
-- For files in both: compare SHA-256.
-
-Possible findings:
-- `LOCAL_ONLY` files → `memory-sync` hasn't run, or push failed.
-- `REPO_ONLY` files → fresh-machine pull pending, or written from cloud Claude.
-- `DIFFER` files → both sides changed; conflict — operator must resolve.
-- `IN_SYNC` → nothing to do.
-
-### 4. Verify repo hygiene
-
-- `.gitignore` includes `DATA/`, `.DS_Store`, `*.env`, `SECRETS.md`, `.claude/`.
-- No tracked file matches `*.env`, `credentials.env`, or `SECRETS.md`.
-- No file in `DATA/` is tracked.
-
-### 5. Report
-
-Open with one of:
-- `ALL CLEAR — skills, routines, memory aligned.`
-- `ATTENTION:` followed by a bullet list of drift items.
-
-Always emit:
-
-| Check | Expected | Actual | Status |
-|---|---|---|---|
-| Secrets populated (SECRETS.md, no placeholders) | … | … | OK / DRIFT |
-| Skills documented vs present | … | … | OK / DRIFT |
-| Credentials in SECRETS.md for each active skill | … | … | OK / DRIFT |
-| Local routines documented vs scheduled | … | … | OK / DRIFT |
-| Remote routines documented (folder presence) | … | … | OK / DRIFT |
-| Memory: local vs repo | … | … | OK / DRIFT / CONFLICT |
-| Repo hygiene (.gitignore, no leaked secrets) | … | … | OK / DRIFT |
-
-### 6. Notify
-
-Send a one-line summary to the channel configured in `SECRETS.md`
-(falls back to printing if not configured).
-
-### 7. Persist
-
-Append the full report to `daily/<YYYY-MM-DD>.md` (local date) using append-mode
-so multiple runs in a day stack.
-
-Add to `MEMORY.md` only when something durable changes — not for one-off drift.
-
-## Constraints
-
-- DO NOT edit `SECRETS.md`, `SECRETS.md`, `AGENTS.md`, or any routine's `README.md` to "fix" drift.
-- DO NOT create or delete scheduled tasks.
-- DO NOT auto-resolve memory conflicts. Reporting only.
-- DO NOT push or commit anything from this routine — that's `memory-sync`'s job.
+- **GREEN**: all checks pass
+- **YELLOW**: non-blocking gap — e.g. drift detected but no conflict, routine missing prompt but folder exists
+- **RED**: conflict detected, task overdue by >2x interval, or git is dirty

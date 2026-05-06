@@ -22,10 +22,9 @@ The repo wins on conflict unless local is clearly newer.
 | Path | Purpose |
 |---|---|
 | `MEMORY/` | Synced mirror of Claude auto-memory. Index in `MEMORY.md`. |
-| `DOCS/strategies/` | Long-form notes on candidate strategies |
 | `DOCS/research/` | Market research, paper summaries, data notes |
 | `DOCS/decisions/` | ADR-style: why we picked X over Y |
-| `STRATEGIES/` | Formal specs: entry, exit, sizing, risk |
+| `STRATEGIES/` | Formal specs (entry, exit, sizing, risk). Index in `STRATEGIES.md`; per-strategy scratchpads live in each folder's `notes.md`. |
 | `DATA/` | Gitignored — cached market data, backtests |
 | `ROUTINES/` | Scheduled tasks (each has README + prompt.md) |
 

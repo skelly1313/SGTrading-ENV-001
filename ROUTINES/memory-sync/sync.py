@@ -214,8 +214,7 @@ def main() -> int:
 
     changed = 0
     MEMORY_REPO.mkdir(parents=True, exist_ok=True)
-    if mode != "pull-only":
-        MEMORY_LOCAL.mkdir(parents=True, exist_ok=True)
+    MEMORY_LOCAL.mkdir(parents=True, exist_ok=True)
 
     for rel in actions["local_only"] + actions["local_newer"]:
         copy_file(MEMORY_LOCAL, MEMORY_REPO, rel)
