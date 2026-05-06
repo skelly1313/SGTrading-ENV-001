@@ -1,19 +1,23 @@
 ---
 name: SG Trading project
-description: Solo trading-bot project — early scaffolding stage, strategy undefined
+description: Trading-bot project — Alpaca paper broker chosen, routines scaffolded, strategy undefined
 type: project
 originSessionId: bdaccfde-f0d6-4dc3-9e8c-03fbd5bfd54d
 ---
-Building a trading bot from scratch. As of 2026-05-06: scaffolding only, no
-strategy chosen, no broker chosen, no data provider chosen.
+Building a trading bot from scratch. Current state as of 2026-05-06:
 
-Repo `SGTrading-ENV-001` (on GitHub under skelly1313) holds skills, routines,
-docs, and a mirror of Claude auto-memory. Local working dir is
-`C:\Users\djske\OneDrive\Desktop\SG Trading\SKILLS\`.
+**Decided:**
+- Broker: Alpaca, paper trading (`paper-api.alpaca.markets`)
+- Routines scaffolded: `memory-sync`, `daily-health-check`
+- Skills catalog: `AGENTS.md` — tracks status (not started / scaffold / beyond) for every skill
 
-**Why:** user explicitly said they haven't gone into details or strategy yet
-and wants the scaffold solid first.
+**Not yet decided:**
+- Strategy (entry, exit, sizing, risk)
+- Market data source (Alpaca bundled vs Polygon / Databento / Tiingo)
+- Language / runtime (Python? Node? Both?)
+- Asset universe (equities only? +crypto via Alpaca?)
+- Capital and risk caps
 
-**How to apply:** don't invent strategy specifics, broker choices, or
-indicators. When something is undefined, say so or ask. Help build out
-infrastructure (sync, routines, backtester harness) before trading logic.
+**Why:** user said on 2026-05-06 they haven't gone into strategy details yet; scaffold first.
+
+**How to apply:** don't invent strategy specifics, indicators, or risk thresholds. Alpaca credentials exist but are paper-only. Consult `AGENTS.md` before assuming what's built — it's the live skill-status catalog.

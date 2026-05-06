@@ -1,4 +1,5 @@
 ﻿- [Don't invent trading strategy details](feedback_no_strategy_invention.md) - User wants scaffold first; never fabricate strategy rules, indicators, or broker choices
-- [SG Trading project](project_sg_trading.md) - Solo trading-bot project — early scaffolding stage, strategy undefined
-- [SGTrading-ENV-001 repo](reference_repo.md) - GitHub repo serving as source of truth for skills, routines, memory
+- [Real secrets must not go in SECRETS.md](feedback_secrets_convention.md) - SECRETS.md is git-tracked — real credentials belong only in SECRETS.local.md (gitignored)
+- [SG Trading project](project_sg_trading.md) - Trading-bot project — Alpaca paper broker chosen, routines scaffolded, strategy undefined
+- [SGTrading-ENV-001 repo](reference_repo.md) - GitHub repo — source of truth for skills, routines, memory, and strategy docs
 - [User skelly1313](user_skelly1313.md) - Solo operator on SG Trading; owns the repo alone, no collaborators
