@@ -287,7 +287,7 @@ Write-Output $report
 
 # --- Notify ---
 if (-not $NoNotify) {
-    $notifyScript = Join-Path $RepoRoot 'LIB\notify.ps1'
+    $notifyScript = Join-Path $RepoRoot 'ROUTINES\notify\notify.ps1'
     if (Test-Path -LiteralPath $notifyScript) {
         $level = if ($drift.Count -gt 0) { 'error' } elseif ($warn.Count -gt 0) { 'warn' } else { 'info' }
         $totalChecks = $Findings.Count

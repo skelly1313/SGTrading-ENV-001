@@ -11,7 +11,7 @@ This repo (`SGTrading-ENV-001`) is the **source of truth** for:
 
 - Project memory (mirrored from local Claude memory → `MEMORY/`)
 - Routines and their prompts (`ROUTINES/`)
-- Strategy specs and research (`STRATEGIES/`, `DOCS/`)
+- Strategy specs and research (`STRATEGIES/`, indexed by `STRATEGIES.md`)
 - Skill catalog (`AGENTS.md`)
 
 Local Claude memory at `~/.claude/projects/<encoded>/memory/` is a working cache.
@@ -21,12 +21,10 @@ The repo wins on conflict unless local is clearly newer.
 
 | Path | Purpose |
 |---|---|
-| `MEMORY/` | Synced mirror of Claude auto-memory. Index in `MEMORY.md`. |
-| `DOCS/research/` | Market research, paper summaries, data notes |
-| `DOCS/decisions/` | ADR-style: why we picked X over Y |
-| `STRATEGIES/` | Formal specs (entry, exit, sizing, risk). Index in `STRATEGIES.md`; per-strategy scratchpads live in each folder's `notes.md`. |
-| `DATA/` | Gitignored — cached market data, backtests |
-| `ROUTINES/` | Scheduled tasks (each has README + prompt.md) |
+| `MEMORY/` | Synced mirror of Claude auto-memory. Index in top-level `MEMORY.md`. |
+| `STRATEGIES/` | Formal specs (entry, exit, sizing, risk). Index in `STRATEGIES.md`; per-strategy scratchpads, research, and backtests live in each folder. |
+| `DATA/` | Gitignored — cached market data, backtests, scratch. |
+| `ROUTINES/` | Scheduled tasks and callable scripts (each has its own folder with README + prompt.md or script). |
 
 ## Conventions
 
@@ -50,3 +48,24 @@ The repo wins on conflict unless local is clearly newer.
 - A backtest harness sketched, even if not run.
 
 We're not there yet. Ask before assuming.
+
+## Decisions
+
+- **Broker:** Alpaca, starting on paper (`paper-api.alpaca.markets`).
+
+## Open decisions
+
+- Market data — Alpaca data is bundled with broker access, but is it enough? (Polygon / Databento / Tiingo for upgrades.)
+- Language / runtime (Python? Node? Both?)
+- Strategy class (mean reversion / momentum / pairs / event-driven)
+- Asset universe (equities only? +crypto via Alpaca?)
+- Capital + risk caps
+
+## File roles
+
+- **AGENTS.md** — index only. Skills table + Routines tables. No commentary.
+- **CLAUDE.md** — this file. Project context, conventions, decisions, open questions.
+- **MEMORY.md** — index of synced auto-memory (mirror of `MEMORY/MEMORY.md`).
+- **STRATEGIES.md** — index of strategy specs in `STRATEGIES/`.
+- **SECRETS.md** — credential template (placeholders only). Real values go in `SECRETS.local.md` (gitignored).
+- **ROUTINES/<name>/** — per-routine `README.md` + `prompt.md` (+ scripts).

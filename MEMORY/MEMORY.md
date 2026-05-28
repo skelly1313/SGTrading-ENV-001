@@ -3,3 +3,4 @@
 - [Reference: SGTrading-ENV-001 repo](reference_repo.md) — GitHub repo; key paths and memory sync model
 - [Feedback: no strategy invention](feedback_no_strategy_invention.md) — never fabricate trading rules, indicators, or risk params without explicit input
 - [Feedback: secrets in SECRETS.local.md only](feedback_secrets_convention.md) — real credentials must not go in tracked SECRETS.md
+- [Feedback: AGENTS.md vs CLAUDE.md roles](feedback_file_roles.md) — AGENTS.md is index-only; prose/decisions live in CLAUDE.md
